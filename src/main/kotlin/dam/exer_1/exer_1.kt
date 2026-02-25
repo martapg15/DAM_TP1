@@ -1,16 +1,15 @@
 package org.example.dam.exer_1
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
-    val name = "Kotlin"
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    println("Hello, $name!")
+    // a)
+    val intArr = IntArray(50) { (it + 1) * (it + 1) }
+    println(intArr.contentToString())
 
-    for (i in 1..5) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        println("i = $i")
-    }
+    //b)
+    val mapArr = (1..50).map { it * it }.toIntArray()
+    println(mapArr.contentToString())
+
+    //c)
+    val arr = Array(50) { (it + 1) * (it + 1) }
+    println(arr.contentToString())
 }
