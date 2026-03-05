@@ -5,6 +5,7 @@ class Library {
 
     fun addBook(book: Book) {
         books.add(book)
+        totalBooksAdded++
     }
 
     fun borrowBook(title: String) {
@@ -38,16 +39,33 @@ class Library {
     }
 
     fun showBooks() {
-        books.forEach { book ->
-            println("Title: ${book.title}, Author: ${book.author}, Copies: ${book.availableCopies}")
-        }
+        println(this)
     }
 
     fun searchByAuthor(author: String) {
-        val authorBook = books.filter { it.title.equals(author, true) }
+        val str = StringBuilder().append("Books by $author:\n")
+        books.forEach {
+            if (it.author == author) {
+                println("Title: ${it.title} (${it.publicationYear}), Copies: ${it.availableCopies}")
+            }
+        }
+        println(str.toString())
+    }
 
-        books.forEach { book ->
-            println("Title: ${book.title}, Copies: ${book.availableCopies}")
+    override fun toString(): String {
+        return buildString {
+            appendLine("--- Library Catalog ---")
+            for (book in books) {
+                appendLine(book.toString())
+            }
+        }
+    }
+
+    companion object {
+        var totalBooksAdded: Int = 0
+
+        fun getTotalBooksCreated(): Int {
+            return totalBooksAdded
         }
     }
 }
