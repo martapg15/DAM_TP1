@@ -13,6 +13,6 @@ class DigitalBook(
     }
 
     override fun toString(): String {
-        return super.toString() + "\nStorage info: ${getStorageInfo()}"
+        return super.toString() + "\n Storage info: ${getStorageInfo()}"
     }
 }

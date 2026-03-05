@@ -22,19 +22,19 @@ abstract class Book(
     var availableCopies: Int = availableCopies
         set(value) {
             if (value < 0) throw IllegalArgumentException("Available Copies cannot be negative")
-            field = value
             if (value == 0) println("Warning: Book is now out of stock!")
+            field = value
         }
 
     init {
-        println("The book: '$title' by $author has been created.")
+        println("The book '$title' by $author has been created.")
     }
 
     abstract fun getStorageInfo(): String
 
     override fun toString(): String {
         val sb = StringBuilder()
-        sb.append("Title: $title, author: $author, publication year: $publicationYear, available copies: $availableCopies")
+        sb.append("Title: $title, Author: $author, Era: $publicationYear, Available: $availableCopies copies")
         return sb.toString()
     }
 }

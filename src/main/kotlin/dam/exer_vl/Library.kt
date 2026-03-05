@@ -1,11 +1,12 @@
 package org.example.dam.exer_vl
 
-class Library {
+class Library(var name: String) {
     var books: MutableList<Book> = mutableListOf()
 
     fun addBook(book: Book) {
         books.add(book)
         totalBooksAdded++
+        println("Book '${book.title}' by ${book.author} has been added to the library.")
     }
 
     fun borrowBook(title: String) {
@@ -18,9 +19,9 @@ class Library {
 
         if (book.availableCopies > 0) {
             book.availableCopies--
-            println("You borrowed the book: '{$book.title}'. There's now {$book.availableCopies} copies left.}")
+            println("Successfully borrowed '${book.title}'. Copies remaining: ${book.availableCopies}")
         } else {
-            println("No available copies to borrow.")
+            println("Sorry, no copies of '${book.title}' are available to borrow.")
         }
     }
 
@@ -32,10 +33,8 @@ class Library {
             return
         }
 
-        if (book.availableCopies > 0) {
-            book.availableCopies++
-            println("You just return the book: '{$book.title}'. There's now {$book.availableCopies} copies left.}")
-        }
+        book.availableCopies++
+        println("Book '${book.title}' returned successfully. Copies available: ${book.availableCopies}")
     }
 
     fun showBooks() {
@@ -46,7 +45,8 @@ class Library {
         val str = StringBuilder().append("Books by $author:\n")
         books.forEach {
             if (it.author == author) {
-                println("Title: ${it.title} (${it.publicationYear}), Copies: ${it.availableCopies}")
+                str.append(" - ${it.title} (${it.publicationYear}, ${it.availableCopies} ${if (it.availableCopies > 1) 
+                    "copies" else "copy"} available)")
             }
         }
         println(str.toString())
@@ -54,7 +54,7 @@ class Library {
 
     override fun toString(): String {
         return buildString {
-            appendLine("--- Library Catalog ---")
+            appendLine("\n--- Library Catalog ---")
             for (book in books) {
                 appendLine(book.toString())
             }
