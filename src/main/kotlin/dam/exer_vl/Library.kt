@@ -2,6 +2,7 @@ package org.example.dam.exer_vl
 
 class Library(var name: String) {
     var books: MutableList<Book> = mutableListOf()
+    var members: MutableList<LibraryMember> = mutableListOf()
 
     fun addBook(book: Book) {
         books.add(book)
@@ -9,7 +10,14 @@ class Library(var name: String) {
         println("Book '${book.title}' by ${book.author} has been added to the library.")
     }
 
-    fun borrowBook(title: String) {
+    fun registerMember(name: String): LibraryMember {
+        val member = LibraryMember(name)
+        members.add(member)
+        println("\nMember '${member.name}' added to the library.")
+        return member
+    }
+
+    fun borrowBook(title: String, member: LibraryMember) {
         val book = books.find { it.title.equals(title, true) }
 
         if (book == null) {
@@ -19,13 +27,15 @@ class Library(var name: String) {
 
         if (book.availableCopies > 0) {
             book.availableCopies--
-            println("Successfully borrowed '${book.title}'. Copies remaining: ${book.availableCopies}")
+            member.borrowedBooks.add(book.title)
+            println("${member.name} has successfully borrowed '${book.title}'. Copies remaining: ${book.availableCopies}")
         } else {
             println("Sorry, no copies of '${book.title}' are available to borrow.")
         }
     }
 
-    fun returnBook(title: String) {
+    fun returnBook(title: String, member: LibraryMember) {
+        val memberBook = member.borrowedBooks.find { it.equals(title, true) }
         val book = books.find { it.title.equals(title, true) }
 
         if (book == null) {
@@ -33,8 +43,9 @@ class Library(var name: String) {
             return
         }
 
+        member.borrowedBooks.remove(memberBook)
         book.availableCopies++
-        println("Book '${book.title}' returned successfully. Copies available: ${book.availableCopies}")
+        println("${member.name} returned the book '${book.title}' successfully. Copies available: ${book.availableCopies}")
     }
 
     fun showBooks() {
